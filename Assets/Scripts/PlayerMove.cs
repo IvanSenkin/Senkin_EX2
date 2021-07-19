@@ -16,24 +16,35 @@ public class PlayerMove : MonoBehaviour
     private float moeuseLookX;
     private float xRotation;
     private Vector3 dir;
-    
+    private float _speedFast;
+
     private void Start()
     {
   
     }
     private void Awake()
     {
+        _speedFast = 2 * _speed;
         _animator = GetComponent<Animator>();
         _hp = _maxHP;
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
+       
     }
     private void Update()
     {
         PlayerLook();
         dir.x = Input.GetAxis("Horizontal");
         dir.z = Input.GetAxis("Vertical");
-
+        if (Input.GetKey(KeyCode.W))
+        {
+            _animator.SetBool("Run", true);
+        }
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
+        {
+            _animator.SetBool("FastRun", true);
+            _speed = _speedFast;
+        }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {    
             _animator.SetTrigger("Fire");
@@ -54,6 +65,12 @@ public class PlayerMove : MonoBehaviour
            // Time.timeScale = 0;
             cameraLook.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
+        if (Input.anyKey == false)
+        {
+             _animator.SetBool("Run", false);
+             _animator.SetBool("FastRun", false);
+            _speed = _speedFast / 2 ;
+        }
     }
     private void PlayerLook()
     {             
@@ -72,20 +89,13 @@ public class PlayerMove : MonoBehaviour
         {            
             var speed = dir * _speed * Time.fixedDeltaTime;
             transform.Translate(speed);
-            _animator.SetBool("Run", true);
             dir = Vector3.zero;  
         }
-       
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            var speed2 = dir * _speed * 2 * Time.fixedDeltaTime;
-            transform.Translate(speed2);
-            dir = Vector3.zero;
-        }
+             
           else 
           {
-            _animator.SetBool("Run", false);
-            _animator.SetBool("FastRun", false);
+           // _animator.SetBool("Run", false);
+           // _animator.SetBool("FastRun", false);
           }
     }
     public void TakeDamage(int damage)

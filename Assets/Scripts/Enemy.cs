@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent navMeshAgent;
     public Transform[] waypoints;
     [SerializeField] private Animator _animator;
-    public bool enemyFire = false;
+    static public bool enemyFire;
     int m_CurrentWaypointIndex;
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
     private void Death()
     {
         Destroy(gameObject);
-    }
+    }   
     public void Init(Transform target)
     {
         _target = target;

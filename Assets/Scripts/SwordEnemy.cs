@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SwordEnemy : MonoBehaviour
 {
-    private void Update()
+    private void FixedUpdate()
     {
-        if (GetComponent<Enemy>().enemyFire)
+        if (Enemy.enemyFire)
         {
             GetComponent<CapsuleCollider>().enabled = true;
         }
-        if (GetComponent<Enemy>().enemyFire)
+        else
         {
             GetComponent<CapsuleCollider>().enabled = false;
         }
@@ -21,7 +21,7 @@ private void OnTriggerEnter(Collider other)
 
           if (other.CompareTag("Player"))
           {
-                  other.GetComponent<PlayerMove>().TakeDamage(20);      
+                  other.GetComponent<PlayerMove>().TakeDamage(10);      
           }
     }
 }

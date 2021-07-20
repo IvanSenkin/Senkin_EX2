@@ -52,7 +52,7 @@ public class PlayerMove : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
-           Time.timeScale = 0;
+            Time.timeScale = 0;
             cameraLook.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
         if (Input.anyKey == false)

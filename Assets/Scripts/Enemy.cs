@@ -11,12 +11,14 @@ public class Enemy : MonoBehaviour
     private int _hp;
     public NavMeshAgent navMeshAgent;
     public Transform[] waypoints;
-
+    [SerializeField] private Animator _animator;
+    public bool enemyFire = false;
     int m_CurrentWaypointIndex;
     private void Awake()
     {
         _hp = _maxHP;
         navMeshAgent.GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
     }
     void Start()
     {
@@ -24,19 +26,22 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
-        if (_checkDinstanseToPlayer >= Vector3.Distance(transform.position, _target.position)) //наоборот не работает =)
+        if (_checkDinstanseToPlayer >= Vector3.Distance(transform.position, _target.position)) 
         {
             navMeshAgent.SetDestination(_target.position);
+            _animator.SetTrigger("Fire");
+            enemyFire = true;
         }
         else if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
         {
             m_CurrentWaypointIndex = (m_CurrentWaypointIndex+1) % waypoints.Length;
             navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+            enemyFire = false;
         }
     }
     public void TakeDamage(int damage)
     {
-        Debug.Log("Auch!");
+        Debug.Log("EnemyAuch!");
         _hp -= damage;
         if (_hp <= 0)
         {
@@ -51,6 +56,16 @@ public class Enemy : MonoBehaviour
     {
         _target = target;
     }
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        //Debug.Log(other);
+
+        //if (other.CompareTag("Sword"))
+        //{
+        //    TakeDamage(10);
+        //    Debug.Log("-10 p.attack");
+        //}
+    }
+
 }
 

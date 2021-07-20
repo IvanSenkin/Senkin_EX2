@@ -18,18 +18,13 @@ public class PlayerMove : MonoBehaviour
     private Vector3 dir;
     private float _speedFast;
 
-    private void Start()
-    {
-  
-    }
     private void Awake()
     {
         _speedFast = 2 * _speed;
         _animator = GetComponent<Animator>();
         _hp = _maxHP;
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-       
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false; 
     }
     private void Update()
     {
@@ -48,11 +43,6 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {    
             _animator.SetTrigger("Fire");
-            TakeDamage(10);   // атачим пока сами себя 
-           // Fire();
-        }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -62,7 +52,7 @@ public class PlayerMove : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
-           // Time.timeScale = 0;
+           Time.timeScale = 0;
             cameraLook.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
         if (Input.anyKey == false)
@@ -91,12 +81,6 @@ public class PlayerMove : MonoBehaviour
             transform.Translate(speed);
             dir = Vector3.zero;  
         }
-             
-          else 
-          {
-           // _animator.SetBool("Run", false);
-           // _animator.SetBool("FastRun", false);
-          }
     }
     public void TakeDamage(int damage)
     {

@@ -14,11 +14,9 @@ public class SwordEnemy : MonoBehaviour
         {
             GetComponent<CapsuleCollider>().enabled = false;
         }
-
     }
 private void OnTriggerEnter(Collider other)
     {
-
           if (other.CompareTag("Player"))
           {
                   other.GetComponent<PlayerMove>().TakeDamage(10);      

@@ -23,8 +23,8 @@ public class PlayerMove : MonoBehaviour
         _speedFast = 2 * _speed;
         _animator = GetComponent<Animator>();
         _hp = _maxHP;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false; 
+       // Cursor.lockState = CursorLockMode.Locked;
+       // Cursor.visible = false; 
     }
     private void Update()
     {
@@ -52,7 +52,7 @@ public class PlayerMove : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
-            Time.timeScale = 0;
+          //  Time.timeScale = 0;
             cameraLook.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
         if (Input.anyKey == false)
@@ -90,9 +90,15 @@ public class PlayerMove : MonoBehaviour
         if (_hp <= 0)
         {
             _animator.SetTrigger("Death");
+            Invoke("LoseCanvas", 3f);
         }
     }
 
+    private void LoseCanvas()
+    {
+        CanvasController.Instance.gameObject.SetActive(true);
+        Time.timeScale = 0;
+    }
 }
 
 

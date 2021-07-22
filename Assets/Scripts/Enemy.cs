@@ -6,6 +6,12 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int _maxHP;
+
+    [SerializeField] private GameObject _item1;
+    [SerializeField] private GameObject _item2;
+    [SerializeField] private GameObject _item3;
+    [SerializeField] private GameObject _spawnSpot;
+    private GameObject randomItem;
     [SerializeField] private Transform _target;
     [SerializeField] private float _checkDinstanseToPlayer;
     private int _hp;
@@ -14,6 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Animator _animator;
     static public bool enemyFire;
     int m_CurrentWaypointIndex;
+    private float random;
     private void Awake()
     {
         _hp = _maxHP;
@@ -26,6 +33,7 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
+        random = Random.Range(0, 3);
         if (_checkDinstanseToPlayer >= Vector3.Distance(transform.position, _target.position)) 
         {
             navMeshAgent.SetDestination(_target.position);
@@ -39,12 +47,27 @@ public class Enemy : MonoBehaviour
             enemyFire = false;
         }
     }
+
     public void TakeDamage(int damage)
+
     {
+        if (random == 1)
+        {
+            randomItem = _item1;
+        } 
+        else if (random == 2)
+        {
+            randomItem = _item2;
+        }
+        else
+        {
+            randomItem = _item3;
+        }
         Debug.Log("EnemyAuch!");
         _hp -= damage;
         if (_hp <= 0)
         {
+            Instantiate(randomItem, _spawnSpot.transform.position , Quaternion.identity); 
             Death();
         }
     }

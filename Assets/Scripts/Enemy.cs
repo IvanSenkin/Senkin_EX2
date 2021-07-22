@@ -67,7 +67,17 @@ public class Enemy : MonoBehaviour
         _hp -= damage;
         if (_hp <= 0)
         {
-            Instantiate(randomItem, _spawnSpot.transform.position , Quaternion.identity); 
+            if (randomItem = _item3)
+            {
+                for (int i = 0; i < Random.Range(0, 5); i++)
+                {
+                  Instantiate(_item3, _spawnSpot.transform.position , Quaternion.identity); 
+                }
+            }
+            else
+            {
+                Instantiate(randomItem, _spawnSpot.transform.position, Quaternion.identity);
+            }
             Death();
         }
     }

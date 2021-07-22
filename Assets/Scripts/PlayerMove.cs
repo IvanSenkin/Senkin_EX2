@@ -23,8 +23,8 @@ public class PlayerMove : MonoBehaviour
         _speedFast = 2 * _speed;
         _animator = GetComponent<Animator>();
         _hp = _maxHP;
-       // Cursor.lockState = CursorLockMode.Locked;
-       // Cursor.visible = false; 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false; 
     }
     private void Update()
     {

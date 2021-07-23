@@ -17,7 +17,6 @@ public class PlayerMove : MonoBehaviour
     private float xRotation;
     private Vector3 dir;
     private float _speedFast;
-
     private void Awake()
     {
         _speedFast = 2 * _speed;

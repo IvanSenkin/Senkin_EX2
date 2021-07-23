@@ -9,7 +9,6 @@ public class LightSettings : MonoBehaviour
     [SerializeField] private Color _colorEquator;
     [SerializeField] private Color _colorGround;
     [SerializeField] private Color _colorLight;
-
     private Light _light;
     private void Awake()
     {
@@ -21,7 +20,6 @@ public class LightSettings : MonoBehaviour
         RenderSettings.ambientSkyColor = _colorSky;
         RenderSettings.ambientEquatorColor = _colorEquator;
         RenderSettings.ambientGroundColor = _colorGround;
-
         _light.color = _colorLight;
     }
 }

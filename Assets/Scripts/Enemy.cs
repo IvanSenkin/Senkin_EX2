@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int _maxHP;
-
     [SerializeField] private GameObject _item1;
     [SerializeField] private GameObject _item2;
     [SerializeField] private GameObject _item3;
@@ -49,22 +48,23 @@ public class Enemy : MonoBehaviour
     }
 
     public void TakeDamage(int damage)
-
     {
-        if (random == 1)
-        {
-            randomItem = _item1;
-        } 
-        else if (random == 2)
-        {
-            randomItem = _item2;
-        }
-        else
-        {
-            randomItem = _item3;
-        }
+                    if (random == 1)
+                    {
+                        randomItem = _item1;
+                    } 
+                    else if (random == 2)
+                    {
+                        randomItem = _item2;
+                    }
+                    else
+                    {
+                        randomItem = _item3;
+                    }
+
         Debug.Log("EnemyAuch!");
         _hp -= damage;
+
         if (_hp <= 0)
         {
             if (randomItem = _item3)
@@ -82,23 +82,12 @@ public class Enemy : MonoBehaviour
         }
     }
     private void Death()
-    {
-        Destroy(gameObject);
-    }   
+    {        
+        Destroy(gameObject, 3f);
+    }
     public void Init(Transform target)
     {
         _target = target;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        //Debug.Log(other);
-
-        //if (other.CompareTag("Sword"))
-        //{
-        //    TakeDamage(10);
-        //    Debug.Log("-10 p.attack");
-        //}
-    }
-
 }
 

@@ -5,9 +5,9 @@ using UnityEngine;
     class CanvasController : MonoBehaviour
     {
         public static CanvasController Instance;
-
         void Awake()
         {
+            if (Instance == null)
             Instance = this;
             gameObject.SetActive(false);
         }

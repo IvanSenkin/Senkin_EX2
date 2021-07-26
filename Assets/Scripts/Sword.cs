@@ -16,11 +16,11 @@ public class Sword : MonoBehaviour
         }
 
     }
-private void OnTriggerEnter(Collider other)
+private void OnTriggerExit (Collider other)
     {
           if (other.CompareTag("Enemy"))
           {
-                  other.GetComponent<Enemy>().TakeDamage(10);      
+                  other.GetComponent<ITakeDamage>().TakeDamage(10);      
           }
     }
 }

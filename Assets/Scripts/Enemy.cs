@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, ITakeDamage
 {
     [SerializeField] private int _maxHP;
     [SerializeField] private GameObject _item1;
@@ -32,7 +32,8 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
-        random = Random.Range(0, 3);
+        RandomItems();
+
         if (_checkDinstanseToPlayer >= Vector3.Distance(transform.position, _target.position)) 
         {
             navMeshAgent.SetDestination(_target.position);
@@ -49,38 +50,47 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-                    if (random == 1)
-                    {
-                        randomItem = _item1;
-                    } 
-                    else if (random == 2)
-                    {
-                        randomItem = _item2;
-                    }
-                    else
-                    {
-                        randomItem = _item3;
-                    }
-
         Debug.Log("EnemyAuch!");
         _hp -= damage;
 
         if (_hp <= 0)
         {
-            if (randomItem = _item3)
-            {
-                for (int i = 0; i < Random.Range(0, 5); i++)
-                {
-                  Instantiate(_item3, _spawnSpot.transform.position , Quaternion.identity); 
-                }
-            }
-            else
-            {
-                Instantiate(randomItem, _spawnSpot.transform.position, Quaternion.identity);
-            }
+            RandomItem3();
             Death();
         }
     }
+
+    private void RandomItems()
+    {
+        if (Mathf.Approximately(random, 1))
+        {
+            randomItem = _item1;
+        }
+        else if (Mathf.Approximately(random, 2))
+        {
+            randomItem = _item2;
+        }
+        else
+        {
+            randomItem = _item3;
+        }
+    }
+
+    private void RandomItem3()
+    {
+        if (randomItem = _item3)
+        {
+            for (int i = 0; i < Random.Range(0, 5); i++)
+            {
+                Instantiate(_item3, _spawnSpot.transform.position, Quaternion.identity);
+            }
+        }
+        else
+        {
+            Instantiate(randomItem, _spawnSpot.transform.position, Quaternion.identity);
+        }
+    }
+
     private void Death()
     {        
         Destroy(gameObject, 3f);

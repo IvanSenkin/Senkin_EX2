@@ -11,32 +11,43 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     [SerializeField] private float sensitivity;
     [SerializeField] private float sensitivityX;
     [SerializeField] private Animator _animator;
+
+    [SerializeField] private string _blendAnimation;
+
     public static Action<int> changeHP;
     private int _hp;
     private float moeuseLookX;
     private float xRotation;
     private Vector3 dir;
     private float _speedFast;
+    private int _blendAnimationHash;
+
+    Rigidbody MyRG;
+
     private void Awake()
     {
         _speedFast = 2 * _speed;
         _animator = GetComponent<Animator>();
         _hp = _maxHP;
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false; 
+        Cursor.visible = false;
+       // var Speed = MyRG.velocity.magnitude;
+        //MyRG.velocity.magnitude = Animator.StringToHash("Speed");
+        MyRG = GetComponent<Rigidbody>();
     }
     private void Update()
     {
+        Moving();
         PlayerLook();
         dir.x = Input.GetAxis("Horizontal");
         dir.z = Input.GetAxis("Vertical");
         if (Input.GetKey(KeyCode.W))
         {
-            _animator.SetBool("Run", true);
+          //  _animator.SetBool("Run", true);
         }
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
         {
-            _animator.SetBool("FastRun", true);
+            //_animator.SetBool("FastRun", true);
             _speed = _speedFast;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -56,8 +67,8 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
         }
         if (Input.anyKey == false)
         {
-             _animator.SetBool("Run", false);
-             _animator.SetBool("FastRun", false);
+           //  _animator.SetBool("Run", false);
+            // _animator.SetBool("FastRun", false);
             _speed = _speedFast / 2 ;
         }
     }
@@ -97,6 +108,13 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     {
         CanvasController.Instance.gameObject.SetActive(true);
         Time.timeScale = 0;
+    }
+
+
+    void Moving()
+    {
+        if (MyRG.velocity.magnitude > 0)
+         _animator.SetFloat(0, MyRG.velocity.magnitude);
     }
 }
 

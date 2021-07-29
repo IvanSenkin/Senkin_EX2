@@ -20,8 +20,8 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     private float xRotation;
     private Vector3 dir;
     private float _speedFast;
-    private int _blendAnimationHash;
-
+    private int _blendAnimationHash = Animator.StringToHash("Blend");
+ 
     Rigidbody MyRG;
 
     private void Awake()
@@ -37,17 +37,16 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     }
     private void Update()
     {
-        Moving();
         PlayerLook();
         dir.x = Input.GetAxis("Horizontal");
         dir.z = Input.GetAxis("Vertical");
         if (Input.GetKey(KeyCode.W))
         {
-          //  _animator.SetBool("Run", true);
+            _animator.SetFloat(_blendAnimationHash, 1f);         
         }
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
         {
-            //_animator.SetBool("FastRun", true);
+            _animator.SetFloat(_blendAnimationHash, 2f);
             _speed = _speedFast;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -67,8 +66,7 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
         }
         if (Input.anyKey == false)
         {
-           //  _animator.SetBool("Run", false);
-            // _animator.SetBool("FastRun", false);
+           _animator.SetFloat(_blendAnimationHash, 0f);
             _speed = _speedFast / 2 ;
         }
     }
@@ -108,13 +106,6 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     {
         CanvasController.Instance.gameObject.SetActive(true);
         Time.timeScale = 0;
-    }
-
-
-    void Moving()
-    {
-        if (MyRG.velocity.magnitude > 0)
-         _animator.SetFloat(0, MyRG.velocity.magnitude);
     }
 }
 

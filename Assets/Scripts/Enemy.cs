@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
         {
             RandomItem3();
             Death();
+            _animator.enabled = false;
         }
     }
 

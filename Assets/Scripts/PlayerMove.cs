@@ -10,10 +10,16 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     [SerializeField] private int _maxHP;
     [SerializeField] private float sensitivity;
     [SerializeField] private float sensitivityX;
-    [SerializeField] private Animator _animator;
+
+    [SerializeField] private bool _isActive;
+
+    [SerializeField] private Transform _lookObject;
+    [SerializeField] private Transform _pointHandObject;
+    [SerializeField] private float _valueWeight;
 
     [SerializeField] private string _blendAnimation;
 
+    private Animator _animator;
     public static Action<int> changeHP;
     private int _hp;
     private float moeuseLookX;
@@ -38,11 +44,25 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     private void Update()
     {
         PlayerLook();
+        KeyDown();
+
         dir.x = Input.GetAxis("Horizontal");
         dir.z = Input.GetAxis("Vertical");
+        if (Vector3.Distance(transform.position, _lookObject.position) < 2)
+        {
+            _isActive = true;
+        }
+        else
+        {
+            _isActive = false;
+        }
+    }
+
+    private void KeyDown()
+    {
         if (Input.GetKey(KeyCode.W))
         {
-            _animator.SetFloat(_blendAnimationHash, 1f);         
+            _animator.SetFloat(_blendAnimationHash, 1f);
         }
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
         {
@@ -50,7 +70,7 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
             _speed = _speedFast;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
-        {    
+        {
             _animator.SetTrigger("Fire");
         }
         if (Input.GetKeyDown(KeyCode.W))
@@ -61,15 +81,16 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
-          //  Time.timeScale = 0;
+            //  Time.timeScale = 0;
             cameraLook.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
         if (Input.anyKey == false)
         {
-           _animator.SetFloat(_blendAnimationHash, 0f);
-            _speed = _speedFast / 2 ;
+            _animator.SetFloat(_blendAnimationHash, 0f);
+            _speed = _speedFast / 2;
         }
     }
+
     private void PlayerLook()
     {             
             moeuseLookX = Input.GetAxis("Mouse X");
@@ -106,6 +127,33 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     {
         CanvasController.Instance.gameObject.SetActive(true);
         Time.timeScale = 0;
+    }
+    private void OnAnimatorIK(int layerIndex)
+    {
+       
+            if (_isActive)
+            {
+                if (_lookObject != null)
+                {
+                    _animator.SetLookAtWeight(1);
+                    _animator.SetLookAtPosition(_lookObject.position);
+                }
+
+                if (_pointHandObject != null)
+                {
+                    _animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, _valueWeight);
+                    _animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, _valueWeight);
+                    _animator.SetIKPosition(AvatarIKGoal.LeftHand, _pointHandObject.position);
+                    _animator.SetIKRotation(AvatarIKGoal.LeftHand, _pointHandObject.rotation);
+                }
+            }
+            else
+            {
+                _animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
+                _animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
+                _animator.SetLookAtWeight(0);
+            }
+        
     }
 }
 

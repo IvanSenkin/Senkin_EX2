@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 public class PlayerMove : MonoBehaviour, ITakeDamage
 {
@@ -37,17 +35,22 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
         _hp = _maxHP;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-       // var Speed = MyRG.velocity.magnitude;
-        //MyRG.velocity.magnitude = Animator.StringToHash("Speed");
+      //  var Speed = MyRG.velocity.magnitude;
+       // MyRG.velocity.magnitude = Animator.StringToHash("Speed");
         MyRG = GetComponent<Rigidbody>();
     }
     private void Update()
     {
         PlayerLook();
         KeyDown();
+        HeadTrackingIsActive();
 
         dir.x = Input.GetAxis("Horizontal");
         dir.z = Input.GetAxis("Vertical");
+    }
+
+    private void HeadTrackingIsActive()
+    {
         if (Vector3.Distance(transform.position, _lookObject.position) < 2)
         {
             _isActive = true;
@@ -129,8 +132,7 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
         Time.timeScale = 0;
     }
     private void OnAnimatorIK(int layerIndex)
-    {
-       
+    {      
             if (_isActive)
             {
                 if (_lookObject != null)

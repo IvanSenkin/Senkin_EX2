@@ -5,21 +5,24 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, ITakeDamage
 {
+    [SerializeField] private Animator _animator;
     [SerializeField] private int _maxHP;
     [SerializeField] private GameObject _item1;
     [SerializeField] private GameObject _item2;
     [SerializeField] private GameObject _item3;
     [SerializeField] private GameObject _spawnSpot;
-    private GameObject randomItem;
     [SerializeField] private Transform _target;
     [SerializeField] private float _checkDinstanseToPlayer;
-    private int _hp;
+    
+    private GameObject randomItem;
     public NavMeshAgent navMeshAgent;
     public Transform[] waypoints;
-    [SerializeField] private Animator _animator;
+
     static public bool enemyFire;
-    int m_CurrentWaypointIndex;
     private float random;
+    private int _hp;
+    private int m_CurrentWaypointIndex;
+
     private void Awake()
     {
         _hp = _maxHP;
@@ -33,8 +36,12 @@ public class Enemy : MonoBehaviour, ITakeDamage
     void Update()
     {
         RandomItems();
+        EnemyPatrol();
+    }
 
-        if (_checkDinstanseToPlayer >= Vector3.Distance(transform.position, _target.position)) 
+    private void EnemyPatrol()
+    {
+        if (_checkDinstanseToPlayer >= Vector3.Distance(transform.position, _target.position))
         {
             navMeshAgent.SetDestination(_target.position);
             _animator.SetTrigger("Fire");
@@ -42,7 +49,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
         }
         else if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
         {
-            m_CurrentWaypointIndex = (m_CurrentWaypointIndex+1) % waypoints.Length;
+            m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % waypoints.Length;
             navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
             enemyFire = false;
         }

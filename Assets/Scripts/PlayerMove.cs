@@ -15,19 +15,15 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     [SerializeField] private Transform _pointHandObject;
     [SerializeField] private float _valueWeight;
 
-    [SerializeField] private string _blendAnimation;
-
     private Animator _animator;
     public static Action<int> changeHP;
     private int _hp;
-    private float moeuseLookX;
+    private float mouseLookX;
     private float xRotation;
     private Vector3 dir;
     private float _speedFast;
     private int _blendAnimationHash = Animator.StringToHash("Blend");
  
-    Rigidbody MyRG;
-
     private void Awake()
     {
         _speedFast = 2 * _speed;
@@ -35,9 +31,6 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
         _hp = _maxHP;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-      //  var Speed = MyRG.velocity.magnitude;
-       // MyRG.velocity.magnitude = Animator.StringToHash("Speed");
-        MyRG = GetComponent<Rigidbody>();
     }
     private void Update()
     {
@@ -51,14 +44,7 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
 
     private void HeadTrackingIsActive()
     {
-        if (Vector3.Distance(transform.position, _lookObject.position) < 2)
-        {
-            _isActive = true;
-        }
-        else
-        {
-            _isActive = false;
-        }
+        _isActive = Vector3.Distance(transform.position, _lookObject.position) < 2;      
     }
 
     private void KeyDown()
@@ -96,11 +82,11 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
 
     private void PlayerLook()
     {             
-            moeuseLookX = Input.GetAxis("Mouse X");
-        var moeuseLookY = Input.GetAxis("Mouse Y") * sensitivityX * Time.deltaTime;
-        transform.Rotate(0f, moeuseLookX * sensitivityX * Time.deltaTime, 0f);
+            mouseLookX = Input.GetAxis("Mouse X");
+        var mouseLookY = Input.GetAxis("Mouse Y") * sensitivityX * Time.deltaTime;
+        transform.Rotate(0f, mouseLookX * sensitivityX * Time.deltaTime, 0f);
 
-        xRotation -= moeuseLookY;
+        xRotation -= mouseLookY;
         xRotation = Mathf.Clamp(xRotation, -30f, 10f);
         headLook.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         cameraLook.localRotation = Quaternion.Euler(xRotation, 0f, 0f);

@@ -14,15 +14,4 @@ public class AnimationPlayer : MonoBehaviour
         _blendAnimationHash = Animator.StringToHash(_blendAnimation);
         MyRG = GetComponent<Rigidbody>();
     }
-
-    private void Start()
-    {
-       // _animator.SetFloat(_blendAnimationHash, 0.7f);
-    }
-    void Moving()
-    {
-        if (MyRG.velocity.magnitude > 0)
-            _animator.SetFloat(_blendAnimationHash, MyRG.velocity.magnitude);
-    }
-
 }

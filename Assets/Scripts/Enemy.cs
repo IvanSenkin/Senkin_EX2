@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
     public NavMeshAgent navMeshAgent;
     public Transform[] waypoints;
 
-    static public bool enemyFire;
+    public static bool enemyFire;
     private float random;
     private int _hp;
     private int m_CurrentWaypointIndex;

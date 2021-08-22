@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, ITakeDamage
 {
-    [SerializeField] private Animator _animator;
     [SerializeField] private int _maxHP;
     [SerializeField] private GameObject _item1;
     [SerializeField] private GameObject _item2;
@@ -14,6 +13,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
     [SerializeField] private Transform _target;
     [SerializeField] private float _checkDinstanseToPlayer;
     
+    private Animator _animator;
     private GameObject randomItem;
     public NavMeshAgent navMeshAgent;
     public Transform[] waypoints;

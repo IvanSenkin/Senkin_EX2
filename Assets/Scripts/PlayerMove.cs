@@ -29,8 +29,8 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
         _speedFast = 2 * _speed;
         _animator = GetComponent<Animator>();
         _hp = _maxHP;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+       Cursor.lockState = CursorLockMode.Locked;
+       Cursor.visible = false;
     }
     private void Update()
     {
@@ -68,9 +68,9 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            //  Time.timeScale = 0;
+            Time.timeScale = 0;
             cameraLook.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
         if (Input.anyKey == false)

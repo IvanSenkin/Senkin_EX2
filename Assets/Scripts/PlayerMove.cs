@@ -36,16 +36,16 @@ public class PlayerMove : MonoBehaviour, ITakeDamage
     {
         PlayerLook();
         KeyDown();
-        HeadTrackingIsActive();
+       // HeadTrackingIsActive();
 
         dir.x = Input.GetAxis("Horizontal");
         dir.z = Input.GetAxis("Vertical");
     }
 
-    private void HeadTrackingIsActive()
-    {
-        _isActive = Vector3.Distance(transform.position, _lookObject.position) < 2;      
-    }
+    //private void HeadTrackingIsActive()
+    //{
+    //    _isActive = Vector3.Distance(transform.position, _lookObject.position) < 2;      
+    //}
 
     private void KeyDown()
     {

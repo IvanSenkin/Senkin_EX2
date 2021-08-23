@@ -16,11 +16,13 @@ public class TestSettingsCamera : MonoBehaviour
         _firstSettingsButton.onClick.AddListener(() => ChangeSettings(true));
         _secondSettingsButton.onClick.AddListener(() => ChangeSettings(false));
     }
+
     private void OnDestroy()
     {
         _firstSettingsButton.onClick.RemoveAllListeners();
         _secondSettingsButton.onClick.RemoveAllListeners();
     }
+
     private void ChangeSettings(bool isfirstPostProcess)
     {
         _PostProcessVolume.profile = isfirstPostProcess ? _firstPostProcessProfile : _secondPostProcessProfile;
